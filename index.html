@@ -1,0 +1,106 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>jQuery Mobile: Theme Download</title>
+	<link rel="stylesheet" href="themes/conv.min.css" />
+	<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+	<link rel="stylesheet" href="themes/jquery.mobile.structure-1.4.2.min.css" />
+	<script src="themes/jquery-1.10.2.min.js"></script>
+	<script src="themes/jquery.mobile-1.4.2.min.js"></script>
+	<script src="themes/conversions.js"></script>
+	<style type="text/css">
+	.ui-body-a{
+		background-color: #22282f;
+	}
+	#convList{
+		position: fixed;
+		overflow: auto;
+		width: 100%;
+		height: 78%;
+		left:-1;
+	}
+	.ui-listview-inset, .ui-panel-inner>.ui-listview-inset {
+		margin: 0 !important;
+	}
+	input[data-type=search]{
+		color:white !important;
+		text-shadow: none !important;
+	}	
+
+	</style>
+	<script type="text/javascript">
+		var convObj = {};
+		$(document).ready(function(){
+			
+			buildList();
+
+			$(document).on('click','.liConv',function(){
+				showConversionPg($(this));
+			});
+
+
+		});
+
+		function showConversionPg(li){
+			var a = $(li).attr('id');
+			convObj = conv[a];
+			console.dir(convObj);
+			$('#ucTitle').html(convObj.name);
+			var s = "<tr><td><input type='number' id='inp' /></td><td><select id='convSel'>";
+			var unitNames = convObj.unit;
+			var len = unitNames.length;
+			for(var i=0;i<len;i++){
+				s += '<option value="'+i+'">'+unitNames[i]+'</option>';
+			}
+			s += '</select></td></tr>';
+
+			$('#convInput').html(s);
+			$.mobile.navigate("#convPage", { transition: "slide" });
+		}
+
+		function buildList(){
+			var length = conv.length;
+			var s = "";
+			for(var i=0;i<length;i++){
+				s += "<li><a href='#' class='liConv' id='"+i+"'><h2>"+conv[i].name+"</h2></a></li>";
+			}
+			$('#convList').html(s);
+			if($('#convList').length>0){
+				$('#convList').listview("refresh");			
+			}
+		}
+
+	</script>
+</head>
+<body>
+	<div data-role="page" data-theme="a">
+		<div data-role="header" data-position="fixed">
+			<h1>Unit Conversion</h1>
+			<a href="#popupBasic" data-position-to="window" data-transition="fade" data-rel="popup" id="infoicon" data-icon="info" class="ui-btn-right" data-iconpos="notext">Info</a>
+		</div>
+		<div data-role="content" data-theme="a">
+			<ul id="convList" data-role="listview" data-filter="true" data-filter-theme="a" data-filter-placeholder="Search Conversions" data-inset="true">
+
+			</ul>
+		</div>
+		<div data-role="popup" id="popupBasic" data-overlay-theme="b" class="ui-content" >
+	    	<a href="#" data-rel="back" data-role="button" data-theme="c" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+				<p>World Wiki gets you latest info of countries in the world from wikipedia.<p>
+				<p>Created By: <a href="http://www.rushis.com">Rushi</a><p>
+		</div>
+	</div>
+
+	<!-- Start of second page -->
+	<div data-role="page" id="convPage" class="cstmPage">
+		<div data-role="header" data-position="fixed">
+			<a href="#" data-icon="arrow-l" data-role="button" data-rel="back" data-theme="a" data-iconpos="notext">Back</a>
+			<h1 id="ucTitle"></h1>
+		</div>
+		<div data-role="content" id="content2">
+			<table data-role="table" class="ui-responsive" id="convInput"></table>
+			<table id="convInfo" data-role="table" class="ui-responsive"></table>
+		</div>
+	</div>
+</body>
+</html>
