@@ -73,7 +73,13 @@
 			});
 
 			$(document).on('change','#convSel,#inp',function(){
-				convertUnit();
+				if($('#ucTitle').html() == 'Temperature'){
+					//0 is Temperature
+					convertTemperature();
+				}else{
+					convertUnit();
+				}
+				
 			});
 
 			$(document).bind('pagechange', function() {
@@ -97,7 +103,13 @@
 
 			$('#convInput').html(s);
 			$.mobile.navigate("#convPage", { transition: "slide" });
-			convertUnit();
+			if(a==0){
+				//0 index is temperature
+				convertTemperature();
+			}else{
+				convertUnit();
+			}
+			
 		}
 
 		function convertUnit(){
@@ -134,6 +146,66 @@
 			if($('#convList').length>0){
 				$('#convList').listview("refresh");			
 			}
+		}
+
+		function fromKelvinToAll(kelvin,allTemps){
+			allTemps.push(parseFloat(kelvin - 273.15).toFixed(2));
+			allTemps.push(parseFloat((373.15 - kelvin)*3/2).toFixed(2));
+			allTemps.push(parseFloat((kelvin*9/5)-459.67).toFixed(2));
+			allTemps.push(parseFloat((kelvin-273.15)*33/100).toFixed(2));
+			allTemps.push(parseFloat(kelvin*9/5).toFixed(2));
+			allTemps.push(parseFloat((kelvin-273.15)*4/5).toFixed(2));
+			allTemps.push(parseFloat(((kelvin-273.15)*21/40)+7.5).toFixed(2));
+			allTemps.push(parseFloat((kelvin-422.038)*9/125).toFixed(2));
+			allTemps.push(parseFloat(kelvin).toFixed(2));
+			return allTemps;
+		}
+
+		function convertTemperature(){
+			var inp = parseFloat($('#inp').val());
+			var sel = parseInt($('#convSel').val());
+			convObj = conv[0];
+			var unitNames = convObj.unit;
+			var len = unitNames.length;
+			var s = "";
+			var kelvin = 0;
+			var allTemps = [];
+			switch(sel){
+				case 0:
+				kelvin = inp+273.15;
+				break;
+				case 1:
+				kelvin = (373.15-parseFloat(inp))+(2/3);
+				break;
+				case 2:
+				kelvin = (inp+459.67)*(5/9);
+				break;
+				case 3:
+				kelvin = (inp*(100/33))+ 273.15;
+				break;
+				case 4:
+				kelvin = inp*(5/9);
+				break;
+				case 5:
+				kelvin = (inp*5/4) + 273.15;
+				break;
+				case 6:
+				kelvin = (-7.5+parseFloat(inp))*(40/21)+273.15 ;
+				break;
+				case 7:
+				kelvin = (inp*(125/9))+422.038;
+				break;
+				case 8:
+				kelvin = 1*inp;
+				break;		
+			}
+			kelvin = parseFloat(kelvin).toFixed(2);
+			allTemps = fromKelvinToAll(kelvin,allTemps);
+			for(var i=0;i<len;i++){
+				s += "<div class='res'><span class='left resLeft'>"+allTemps[i]+"</span><span class='right resRight'>"+unitNames[i]+"</span></div>"
+			}
+			$('#convInfo').html(s);
+			$('#content2').trigger("create");
 		}
 
 	</script>
