@@ -47,12 +47,15 @@
 		padding:2px;
 	}
 	.resLeft{
-		left:-2%;
+		position:relative;
 		text-align: right
+		width:50%;
 	}
 	.resRight{
+		position:relative;
 		left:2%;
 		text-align: left
+		width:50%;
 	}
 	#convInput{
 		text-align: center;
@@ -65,12 +68,16 @@
 			
 			buildList();
 
-			$(document).on('click','.liConv',function(){
+			$(document).on('tap','.liConv',function(){
 				showConversionPg($(this));
 			});
 
 			$(document).on('change','#convSel,#inp',function(){
 				convertUnit();
+			});
+
+			$(document).bind('pagechange', function() {
+				$('#convList').listview('refresh');
 			});
 
 		});
@@ -80,7 +87,7 @@
 			convObj = conv[a];
 			//console.dir(convObj);
 			$('#ucTitle').html(convObj.name);
-			var s = "<span class='left'><input type='number' id='inp' value=1 /></span><span class='right'><select id='convSel'>";
+			var s = "<span class='resLeft'><input type='number' id='inp' placeholder='Enter Value To Convert' value=1 /></span><span class='resLeft'><select id='convSel'>";
 			var unitNames = convObj.unit;
 			var len = unitNames.length;
 			for(var i=0;i<len;i++){
@@ -105,6 +112,7 @@
 				s += "<div class='res'><span class='left resLeft'>"+convert(factors[sel],factors[i],inp)+"</span><span class='right resRight'>"+unitNames[i]+"</span></div>"
 			}
 			$('#convInfo').html(s);
+			$('#content2').trigger("create");
 		}
 
 		function convert(from,to,factor){
@@ -131,7 +139,7 @@
 	</script>
 </head>
 <body>
-	<div data-role="page" data-theme="a">
+	<div data-role="page" data-theme="a" id="mainPage">
 		<div data-role="header" data-position="fixed">
 			<h1>Unit Conversion</h1>
 			<a href="#popupBasic" data-position-to="window" data-transition="fade" data-rel="popup" id="infoicon" data-icon="info" class="ui-btn-right" data-iconpos="notext">Info</a>
@@ -141,9 +149,9 @@
 
 			</ul>
 		</div>
-		<div data-role="popup" id="popupBasic" data-overlay-theme="b" class="ui-content" >
+		<div data-role="popup" id="popupBasic" data-overlay-theme="a" class="ui-content" >
 	    	<a href="#" data-rel="back" data-role="button" data-theme="c" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
-				<p>World Wiki gets you latest info of countries in the world from wikipedia.<p>
+				<p>One App for all your unit conversions.<p>
 				<p>Created By: <a href="http://www.rushis.com">Rushi</a><p>
 		</div>
 	</div>
@@ -151,7 +159,7 @@
 	<!-- Start of second page -->
 	<div data-role="page" id="convPage" class="cstmPage">
 		<div data-role="header" data-position="fixed">
-			<a href="#" data-icon="arrow-l" data-role="button" data-rel="back" data-theme="a" data-iconpos="notext">Back</a>
+			<a href="#mainPage" data-icon="arrow-l" data-role="button" data-theme="a" data-transition="slideUp" data-iconpos="notext">Back</a>
 			<h1 id="ucTitle"></h1>
 		</div>
 		<div data-role="content" id="content2">
