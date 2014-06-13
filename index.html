@@ -9,6 +9,8 @@
 	<script src="themes/jquery-1.10.2.min.js"></script>
 	<script src="themes/jquery.mobile-1.4.2.min.js"></script>
 	<script src="themes/conversions.js"></script>
+ 	<link rel="stylesheet" href="themes/css/fontello.css">
+    <link rel="stylesheet" href="themes/css/animation.css">
 	<style type="text/css">
 	.ui-body-a{
 		background-color: #22282f;
@@ -60,6 +62,14 @@
 	#convInput{
 		text-align: center;
 		margin: 0 auto;
+	}
+	[class^="icon-"]:before, [class*=" icon-"]:before {
+		z-index: 2;
+		color:darkcyan;
+		display: inline;
+		font-size: 1.5em !important;
+		margin-right: .5em;
+		float:left;
 	}
 	</style>
 	<script type="text/javascript">
@@ -140,7 +150,7 @@
 			var length = conv.length;
 			var s = "";
 			for(var i=0;i<length;i++){
-				s += "<li><a href='#' class='liConv' id='"+i+"'><h2>"+conv[i].name+"</h2></a></li>";
+				s += "<li><a href='#' class='liConv' id='"+i+"'><span class='"+conv[i].icon+"'></span><span>"+conv[i].name+"</span></a></li>";
 			}
 			$('#convList').html(s);
 			if($('#convList').length>0){
