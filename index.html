@@ -28,12 +28,35 @@
 		text-shadow: none !important;
 	}
 	.left{
+		width:50%;
 		position: relative;
-		float:left;
+		display: inline-table;
+		
 	}
 	.right{
+		width:50%;
 		position: relative;
-		float:right;
+		display: inline-table;
+		
+	}
+	.res{
+		color:white;
+		font-size: 1.2em;
+		border-bottom: 1px solid gray;
+		margin:2px;
+		padding:2px;
+	}
+	.resLeft{
+		left:-2%;
+		text-align: right
+	}
+	.resRight{
+		left:2%;
+		text-align: left
+	}
+	#convInput{
+		text-align: center;
+		margin: 0 auto;
 	}
 	</style>
 	<script type="text/javascript">
@@ -46,15 +69,18 @@
 				showConversionPg($(this));
 			});
 
+			$(document).on('change','#convSel,#inp',function(){
+				convertUnit();
+			});
 
 		});
 
 		function showConversionPg(li){
 			var a = $(li).attr('id');
 			convObj = conv[a];
-			console.dir(convObj);
+			//console.dir(convObj);
 			$('#ucTitle').html(convObj.name);
-			var s = "<span class='left'><input type='number' id='inp' /></span><span class='right'><select id='convSel'>";
+			var s = "<span class='left'><input type='number' id='inp' value=1 /></span><span class='right'><select id='convSel'>";
 			var unitNames = convObj.unit;
 			var len = unitNames.length;
 			for(var i=0;i<len;i++){
@@ -64,15 +90,21 @@
 
 			$('#convInput').html(s);
 			$.mobile.navigate("#convPage", { transition: "slide" });
+			convertUnit();
 		}
 
 		function convertUnit(){
-			var a = $('#inp').val();
-			var s = '';
+			var inp = $('#inp').val();
+			var sel = $('#convSel').val();
+			var unitNames = convObj.unit;
+			var factors = convObj.num;
+			//console.log(factors);
 			var len = unitNames.length;
+			var s = "";
 			for(var i=0;i<len;i++){
-				s += '<option value="'+i+'">'+unitNames[i]+'</option>';
+				s += "<div class='res'><span class='left resLeft'>"+convert(factors[sel],factors[i],inp)+"</span><span class='right resRight'>"+unitNames[i]+"</span></div>"
 			}
+			$('#convInfo').html(s);
 		}
 
 		function convert(from,to,factor){
@@ -81,7 +113,7 @@
 			if (isNaN(parseFloat(result)))
 				return "";
 			else
-				return parseFloat(resfaqs).toFixed(2);
+				return parseFloat(result).toFixed(2);
 		}
 
 		function buildList(){
@@ -127,6 +159,7 @@
 
 			<table id="convInfo" data-role="table" class="ui-responsive"></table> -->
 			<div id="convInput"></div>
+			<div id="convInfo"></div>
 		</div>
 	</div>
 </body>
