@@ -26,8 +26,15 @@
 	input[data-type=search]{
 		color:white !important;
 		text-shadow: none !important;
-	}	
-
+	}
+	.left{
+		position: relative;
+		float:left;
+	}
+	.right{
+		position: relative;
+		float:right;
+	}
 	</style>
 	<script type="text/javascript">
 		var convObj = {};
@@ -47,16 +54,34 @@
 			convObj = conv[a];
 			console.dir(convObj);
 			$('#ucTitle').html(convObj.name);
-			var s = "<tr><td><input type='number' id='inp' /></td><td><select id='convSel'>";
+			var s = "<span class='left'><input type='number' id='inp' /></span><span class='right'><select id='convSel'>";
 			var unitNames = convObj.unit;
 			var len = unitNames.length;
 			for(var i=0;i<len;i++){
 				s += '<option value="'+i+'">'+unitNames[i]+'</option>';
 			}
-			s += '</select></td></tr>';
+			s += '</select></span>';
 
 			$('#convInput').html(s);
 			$.mobile.navigate("#convPage", { transition: "slide" });
+		}
+
+		function convertUnit(){
+			var a = $('#inp').val();
+			var s = '';
+			var len = unitNames.length;
+			for(var i=0;i<len;i++){
+				s += '<option value="'+i+'">'+unitNames[i]+'</option>';
+			}
+		}
+
+		function convert(from,to,factor){
+			var ratio=to/from;
+			var result=ratio*factor;
+			if (isNaN(parseFloat(result)))
+				return "";
+			else
+				return parseFloat(resfaqs).toFixed(2);
 		}
 
 		function buildList(){
@@ -98,8 +123,10 @@
 			<h1 id="ucTitle"></h1>
 		</div>
 		<div data-role="content" id="content2">
-			<table data-role="table" class="ui-responsive" id="convInput"></table>
-			<table id="convInfo" data-role="table" class="ui-responsive"></table>
+			<!-- <table data-role="table" class="ui-responsive" id="convInput"></table>
+
+			<table id="convInfo" data-role="table" class="ui-responsive"></table> -->
+			<div id="convInput"></div>
 		</div>
 	</div>
 </body>
