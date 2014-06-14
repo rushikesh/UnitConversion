@@ -242,6 +242,7 @@
 	<div data-role="page" id="convPage" class="cstmPage">
 		<div data-role="header" data-position="fixed">
 			<a href="#" data-rel="back" data-icon="arrow-l" data-role="button" data-theme="a" data-transition="slideUp" data-iconpos="notext">Back</a>
+			<a href="#popupConv" data-position-to="window" data-transition="fade" data-rel="popup" id="infoicon" data-icon="info" class="ui-btn-right" data-iconpos="notext">Info</a>
 			<h1 id="ucTitle"></h1>
 		</div>
 		<div data-role="content" id="content2">
@@ -250,6 +251,11 @@
 			<table id="convInfo" data-role="table" class="ui-responsive"></table> -->
 			<div id="convInput"></div>
 			<div id="convInfo"></div>
+		</div>
+		<div data-role="popup" id="popupConv" data-overlay-theme="a" class="ui-content" >
+	    	<a href="#" data-rel="back" data-role="button" data-theme="c" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+				<p>Just select the unit from drop down and enter the value, the app does the rest of conversion<p>
+				<p>Created By: <a href="http://www.rushis.com">Rushi</a><p>
 		</div>
 	</div>
 </body>
