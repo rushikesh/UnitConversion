@@ -15,13 +15,13 @@
 	.ui-body-a{
 		background-color: #22282f;
 	}
-	#convList{
-		position: fixed;
-		overflow: auto;
-		width: 100%;
-		height: 78%;
-		left:-1;
-	}
+/* 	#convList{
+	position: fixed;
+	overflow: auto;
+	width: 100%;
+	height: 78%;
+	left:-1;
+} */
 	.ui-listview-inset, .ui-panel-inner>.ui-listview-inset {
 		margin: 0 !important;
 	}
@@ -91,11 +91,11 @@
 				}
 				
 			});
-
+			/*
 			$(document).bind('pagechange', function() {
 				$('#convList').listview('refresh');
 			});
-
+			*/
 		});
 
 		function showConversionPg(li){
@@ -227,7 +227,7 @@
 			<a href="#popupBasic" data-position-to="window" data-transition="fade" data-rel="popup" id="infoicon" data-icon="info" class="ui-btn-right" data-iconpos="notext">Info</a>
 		</div>
 		<div data-role="content" data-theme="a">
-			<ul id="convList" data-role="listview" data-filter="true" data-filter-theme="a" data-filter-placeholder="Search Conversions" data-inset="true">
+			<ul id="convList" data-role="listview" data-inset="true">
 
 			</ul>
 		</div>
@@ -241,7 +241,7 @@
 	<!-- Start of second page -->
 	<div data-role="page" id="convPage" class="cstmPage">
 		<div data-role="header" data-position="fixed">
-			<a href="#mainPage" data-icon="arrow-l" data-role="button" data-theme="a" data-transition="slideUp" data-iconpos="notext">Back</a>
+			<a href="#" data-rel="back" data-icon="arrow-l" data-role="button" data-theme="a" data-transition="slideUp" data-iconpos="notext">Back</a>
 			<h1 id="ucTitle"></h1>
 		</div>
 		<div data-role="content" id="content2">
